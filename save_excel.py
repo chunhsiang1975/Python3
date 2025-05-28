@@ -1,11 +1,10 @@
 # Writeten by Chun-Hsiang Chao
-# Date:20250527
+# Date:20250528
 import datetime
 import openpyxl 
 from openpyxl.styles import Font, Color, Alignment, Border, Side, PatternFill, NamedStyle, GradientFill
-from openpyxl.styles.differential import DifferentialStyle
-from openpyxl.formatting.rule import Rule
-
+from openpyxl.utils import FORMULAE
+from openpyxl.formatting.rule import CellIsRule, ColorScaleRule
 
 
 table_name=["Test1","Test2","Test3"]
@@ -65,18 +64,36 @@ thin_border_side=Side(border_style="thin",color="000000")
 square_border = Border(top=double_border_side,right=thin_border_side,bottom=double_border_side,left=thin_border_side)
 
 sheet=workbook.worksheets[0]
+
+
+red_background = PatternFill(fgColor="00FF0000", fill_type="solid")
+sheet.conditional_formatting.add("A3:I9",CellIsRule(operator="greaterThan", formula=["59"], fill=red_background))
+blue_background = PatternFill(fgColor="000000FF", fill_type="solid")
+sheet.conditional_formatting.add("A3:I9",CellIsRule(operator="lessThan", formula=["10"], fill=blue_background))
+green_background = PatternFill(fgColor="0000FF00", fill_type="solid")
+sheet.conditional_formatting.add("A3:I9",CellIsRule(operator="between", formula=["20","30"], fill=green_background))
+
+
 sheet["A1"].font = bold_font
 sheet["B3"].font = big_red_text
 sheet["B3"].alignment = center_aligned_text
 sheet["A1"].border = square_border
-sheet["A3"].fill = PatternFill("solid",fgColor="00FF0000")
-sheet["C3"].fill = GradientFill(stop=("000000","FFFFFF"))
+sheet["A1"].fill = PatternFill("solid",fgColor="00FF0000")
+sheet["C1"].fill = GradientFill(stop=("000000","FFFFFF"))
 sheet["E1"]=datetime.datetime(2025,5,27)
 sheet["E1"].number_format="yyyy-mm-dd"
 sheet["D1"]=datetime.datetime.now()
 sheet["D1"].number_format="yyyy-mm-dd h:mm:ss"
 sheet["F1"]=0.123456
 sheet["F1"].number_format="0.00"
+sheet["H1"]='=COUNTIF(H3:H9,">26")'
+sheet["I1"]="=AVERAGE(I3:I9)"
+
+
+
+
+#sheet.freeze_panes="C2"
+#sheet.auto_filter.ref="A1:I9"
 
 
 header = NamedStyle(name="header")
@@ -93,16 +110,15 @@ highlight.font = Font(bold=True, size=20)
 bd = Side(style='thick', color="000000")
 highlight.border = Border(left=bd, top=bd, right=bd, bottom=bd)
 workbook.add_named_style(highlight)
-sheet["I3"].style="highlight"
+sheet["I1"].style="highlight"
+
+date_sheet=workbook["202505"]
+operations_sheet = workbook.create_sheet("Operations")
+workbook.remove(operations_sheet)
+workbook.copy_worksheet(date_sheet)
+workbook["202505 Copy"].title="202506"
 
 
-
-#red_background = PatternFill(fgColor="00FF0000")
-#diff_style = DifferentialStyle(fill=red_background)
-#rule = Rule(type="expression", dxf=diff_style)
-#rule.formula = ["$H>10"]
-#sheet.conditional_formatting.add("A1:O100", rule)
-#sheet.conditional_formatting.add("A1", rule)
 
 
 workbook.save('test.xlsx')
