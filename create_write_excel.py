@@ -1,11 +1,11 @@
 # Writeten by Chun-Hsiang Chao
-# Date:20250528
+# Date:20250602
 import datetime
 import openpyxl 
 from openpyxl.styles import Font, Color, Alignment, Border, Side, PatternFill, NamedStyle, GradientFill
 from openpyxl.utils import FORMULAE
 from openpyxl.formatting.rule import CellIsRule, ColorScaleRule
-
+from openpyxl.chart import BarChart, Reference
 
 table_name=["Test1","Test2","Test3"]
 interger_i=0
@@ -119,7 +119,29 @@ workbook.copy_worksheet(date_sheet)
 workbook["202505 Copy"].title="202506"
 
 
+rows = [
+    ["Product", "Online", "Store"],
+    [1, 30, 45],
+    [2, 40, 30],
+    [3, 40, 25],
+    [4, 50, 30],
+    [5, 30, 25],
+    [6, 25, 35],
+    [7, 20, 40],
+]
 
+for row in rows:
+	sheet.append(row)
+
+chart = BarChart()
+data = Reference(worksheet=sheet,
+min_row=10,
+max_row=17,
+min_col=2,
+max_col=3)
+
+chart.add_data(data, titles_from_data=True)
+sheet.add_chart(chart, "E20")
 
 workbook.save('test.xlsx')
 workbook.close()
