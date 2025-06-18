@@ -1,5 +1,5 @@
 # Writeten by Chun-Hsiang Chao
-# Date:20250602
+# Date:20250618
 import datetime
 import openpyxl 
 from openpyxl.styles import Font, Color, Alignment, Border, Side, PatternFill, NamedStyle, GradientFill
@@ -88,7 +88,14 @@ sheet["F1"]=0.123456
 sheet["F1"].number_format="0.00"
 sheet["H1"]='=COUNTIF(H3:H9,">26")'
 sheet["I1"]="=AVERAGE(I3:I9)"
+sheet["J1"]="='202505'!A2"
 
+s_list=list(sheet.cell(1,10).value)
+s_list[7]="6"
+new_s=''.join(s_list)
+sheet["K1"]=new_s
+sheet["L1"]="="+"SUM('"+table_name[1]+"'!E3:E10)"
+sheet["M1"]=workbook[table_name[0]].cell(1,10).value
 
 
 
@@ -117,7 +124,7 @@ operations_sheet = workbook.create_sheet("Operations")
 workbook.remove(operations_sheet)
 workbook.copy_worksheet(date_sheet)
 workbook["202505 Copy"].title="202506"
-
+workbook["202506"].cell(2,1).value=30
 
 rows = [
     ["Product", "Online", "Store"],
