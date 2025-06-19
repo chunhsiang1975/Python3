@@ -1,5 +1,5 @@
 # Writeten by Chun-Hsiang Chao
-# Date:20250618
+# Date:20250619
 import datetime
 import openpyxl
 from openpyxl.styles import Font, Color, Alignment, Border, Side, PatternFill, NamedStyle, GradientFill
@@ -8,7 +8,7 @@ from openpyxl.formatting.rule import CellIsRule, ColorScaleRule
 #from xlcalculator import Evaluator
 #pip install xlcalculator --break-system-packages
 
-table_name=["202507","202507預算","202508","202508預算"]
+table_name=["202507","202507預算","202508","202508預算","202509","202509預算"]
 #print(len(table_name))
 
 workbook=openpyxl.load_workbook('my_financial_3.xlsx',data_only=False)
@@ -21,9 +21,9 @@ sheet.page_setup.fitToWidth=1
 
 shlist=workbook.sheetnames
 lpos=(len(shlist)-1)
-print(lpos)
-print(shlist)
-
+#print(lpos)
+#print(shlist)
+sheets=workbook._sheets
 
 
 for k in range(0,len(table_name)-1,2):
@@ -31,10 +31,18 @@ for k in range(0,len(table_name)-1,2):
     source_sheet=workbook["yearMonth"]
     workbook.copy_worksheet(source_sheet)
     workbook["yearMonth Copy"].title=table_name[k]
+    new_sheet=workbook[table_name[k]]
+    sheets.pop(lpos+1)
+    sheets.insert(5,new_sheet)
+    lpos+=1
     
     source_sheet=workbook["yearMonth預算"]
     workbook.copy_worksheet(source_sheet)
     workbook["yearMonth預算 Copy"].title=table_name[k+1]
+    new_sheet=workbook[table_name[k+1]]
+    sheets.pop(lpos+1)
+    sheets.insert(6,new_sheet)
+    lpos+=1
     
     sheet=workbook[table_name[k+1]]
     sheet['B2']=table_name[k+1][4:6]
