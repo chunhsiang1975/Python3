@@ -1,5 +1,5 @@
 # Writeten by Chun-Hsiang Chao
-# Date:20250618
+# Date:20250620
 import datetime
 import openpyxl 
 from openpyxl.styles import Font, Color, Alignment, Border, Side, PatternFill, NamedStyle, GradientFill
@@ -46,6 +46,9 @@ sheet.delete_cols(idx=6)
 
 sheet.insert_rows(idx=5, amount=3)
 sheet.delete_rows(idx=6, amount=2)
+
+sheet.merge_cells('A1:B1')
+#sheet.unmerge_cells('A1:B1')
 
 
 sheet=workbook.create_sheet('202505',2)
@@ -139,6 +142,10 @@ rows = [
 
 for row in rows:
 	sheet.append(row)
+
+
+sheet.insert_rows(10)
+#sheet.move_range("A3:I9",rows=14,cols=16,translate=True)
 
 chart = BarChart()
 data = Reference(worksheet=sheet,
