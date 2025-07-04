@@ -1,5 +1,5 @@
 # Writeten by Chun-Hsiang Chao
-# Date:20250701
+# Date:20250704
 import csv
 import openpyxl
 import os
@@ -28,6 +28,7 @@ with open(file_path, 'r', newline='\n', encoding='utf-8') as f:
 	for row in reader:
 		sheet.append(row)
 
+title=sheet.cell(row=1,column=1).value
 
 records_number=21
 
@@ -69,7 +70,9 @@ sheet.column_dimensions[i].width=10
 
 
 #print(sheet.cell(row=3,column=5).value)
-
+sheet_chart=wb.create_sheet("Chart",1)
+sheet_chart['G3']=title
+sheet_chart.merge_cells('G3:K3')
 
 chart=LineChart()
 #Method 1
@@ -88,8 +91,9 @@ for i in range(0,4):
 
 #chart.y_axis.scaling.min = 24  # Set the minimum value for the y-axis
 #chart.y_axis.scaling.max = 29 # Set the maximum value for the y-axis
-
-sheet.add_chart(chart, "J2")
+date_x=Reference(sheet,min_row=3,max_row=23,min_col=1,max_col=1)
+chart.set_categories(date_x)
+sheet_chart.add_chart(chart, "A6")
 
 chart=BarChart()
 datas_columns=[2]
@@ -99,7 +103,9 @@ for i in datas_columns:
 	series.graphicalProperties.line.solidFill = color_name[0]
 	chart.append(series)
 
-sheet.add_chart(chart, "J20")
+date_x=Reference(sheet,min_row=3,max_row=23,min_col=1,max_col=1)
+chart.set_categories(date_x)
+sheet_chart.add_chart(chart, "J6")
 
 
 chart=BarChart()
@@ -110,7 +116,9 @@ for i in datas_columns:
 	series.graphicalProperties.line.solidFill = color_name[1]
 	chart.append(series)
 
-sheet.add_chart(chart, "S2")
+date_x=Reference(sheet,min_row=3,max_row=23,min_col=1,max_col=1)
+chart.set_categories(date_x)
+sheet_chart.add_chart(chart, "A22")
 
 chart=BarChart()
 datas_columns=[9]
@@ -120,7 +128,9 @@ for i in datas_columns:
 	series.graphicalProperties.line.solidFill = color_name[2]
 	chart.append(series)
 
-sheet.add_chart(chart, "S20")
+date_x=Reference(sheet,min_row=3,max_row=23,min_col=1,max_col=1)
+chart.set_categories(date_x)
+sheet_chart.add_chart(chart, "J22")
 
 wb.save('output_excel_file.xlsx')
 wb.close()
