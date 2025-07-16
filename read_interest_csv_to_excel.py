@@ -1,5 +1,5 @@
 # Writeten by Chun-Hsiang Chao
-# Date:20250703
+# Date:20250716
 import csv
 import openpyxl
 import os
@@ -62,7 +62,8 @@ for row in sheet.iter_rows(min_row=3, values_only=True):
     data.append(list(row))
 
 
-sorted_data = sorted(data, key=lambda x: (x[3],x[5],x[6]),reverse=True)
+#sorted_data = sorted(data, key=lambda x: (x[3],x[5],x[6]),reverse=True)
+sorted_data = sorted(data, key=lambda x: (x[3]),reverse=True)
 #sorted_data = sorted(data, key=itemgetter(3,5),reverse=True)
 sheet.delete_rows(3, sheet.max_row)
 
@@ -96,5 +97,5 @@ sheet.column_dimensions[i].width=16
 
 
 
-wb.save('output_excel_file.xlsx')
+wb.save('output_excel_stock_interest.xlsx')
 wb.close()
