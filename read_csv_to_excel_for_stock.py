@@ -1,5 +1,5 @@
 # Writeten by Chun-Hsiang Chao
-# Date:20250716
+# Date:20250717
 import csv
 import openpyxl
 import os
@@ -16,7 +16,7 @@ def convertDate(date):
 	return realdate
 
 
-file_path = 'STOCK_DAY_1101_202507_utf-8.csv'
+file_path = 'STOCK_DAY_1101_202506_utf-8.csv'
 
 
 wb = Workbook()
@@ -79,6 +79,8 @@ sheet_chart['G3']=title
 sheet_chart.merge_cells('G3:K3')
 
 chart=LineChart()
+chart.x_axis.title="Date"
+chart.y_axis.title="Price"
 #Method 1
 #data = Reference(sheet,min_row=2,max_row=21,min_col=4,max_col=7)
 #chart.add_data(data, titles_from_data=True)

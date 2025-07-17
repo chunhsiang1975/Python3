@@ -54,6 +54,8 @@ int_columns=[6,7]
 for x in range(3,records_number+2):
   for y in int_columns:
     sheet.cell(row=x,column=y,value=float(sheet.cell(row=x,column=y).value))
+#    sheet.cell(row=x,column=y,value=str(sheet.cell(row=x,column=y).value))
+
 
 
 
