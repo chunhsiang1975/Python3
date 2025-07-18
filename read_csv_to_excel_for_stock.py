@@ -1,5 +1,5 @@
 # Writeten by Chun-Hsiang Chao
-# Date:20250717
+# Date:20250718
 import csv
 import openpyxl
 import os
@@ -99,6 +99,8 @@ for i in range(0,4):
 #chart.y_axis.scaling.max = 29 # Set the maximum value for the y-axis
 date_x=Reference(sheet,min_row=3,max_row=23,min_col=1,max_col=1)
 chart.set_categories(date_x)
+chart.width=records_number
+#chart.height=10
 sheet_chart.add_chart(chart, "A6")
 
 chart=BarChart()
@@ -111,7 +113,9 @@ for i in datas_columns:
 
 date_x=Reference(sheet,min_row=3,max_row=23,min_col=1,max_col=1)
 chart.set_categories(date_x)
-sheet_chart.add_chart(chart, "J6")
+chart.width=records_number
+#chart.height=10
+sheet_chart.add_chart(chart, "N6")
 
 
 chart=BarChart()
@@ -124,6 +128,8 @@ for i in datas_columns:
 
 date_x=Reference(sheet,min_row=3,max_row=23,min_col=1,max_col=1)
 chart.set_categories(date_x)
+chart.width=records_number
+#chart.height=10
 sheet_chart.add_chart(chart, "A22")
 
 chart=BarChart()
@@ -136,7 +142,9 @@ for i in datas_columns:
 
 date_x=Reference(sheet,min_row=3,max_row=23,min_col=1,max_col=1)
 chart.set_categories(date_x)
-sheet_chart.add_chart(chart, "J22")
+chart.width=records_number
+#chart.height=10
+sheet_chart.add_chart(chart, "N22")
 
 wb.save('output_excel_file.xlsx')
 wb.close()
