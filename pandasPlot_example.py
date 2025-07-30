@@ -1,12 +1,13 @@
 # Writeten by Chun-Hsiang Chao
-# Date:20250723
+# Date:20250730
 import pandas as pd
 import csv
 import openpyxl
 from openpyxl import Workbook
 
-file_path = 'STOCK_DAY_1101_202506_utf-8.csv'
 
+file_path = 'STOCK_DAY_1101_202506_utf-8.csv'
+temp_file_path='test.xlsx'
 
 wb = Workbook()
 sheet=wb.active
@@ -22,33 +23,21 @@ title=sheet.cell(row=1,column=1).value
 rows=sheet.max_row
 records_number=rows-7
 
-row_number=2
-column_name = [cell.value for cell in sheet[row_number]] 
-#print(list(column_name)[1])
+
+sheet.delete_rows(idx=records_number+3,amount=5)
+sheet.delete_rows(idx=1)
+
+wb.save(temp_file_path)
+wb.close()
 
 
-row_number=2
-df=pd.DataFrame(list([cell.value for cell in sheet[row_number]]))
-#df.columns=list(column_name)
+
+#df=pd.read_csv('STOCK_DAY_1101_202506_data.csv')
+#df=pd.read_excel('test.xlsx',sheet_name='CSV_data')
+df=pd.read_excel(temp_file_path)
 print(len(df.columns))
-for i in range(3,records_number+3):
-  row_data = [cell.value for cell in sheet[i]] 
-  #print(row_data)
-  new_df=pd.DataFrame(row_data)
-  df = pd.concat([df, new_df], ignore_index=True)
-
 print(df.loc[[0,11]])
-print(df.columns.tolist())
-
-
-#df=pd.DataFrame(data,columns=column_name)
-#df = pd.read_csv(file_path,sep=',')
-#df = pd.read_csv('data.csv')
-
-full_df = pd.read_csv(file_path,sep=',')
-new_row_series=full_df.iloc[1]
-print(new_row_series)
-
+print(df.columns)
 
 
 #pd.options.display.max_rows=9999
@@ -60,18 +49,3 @@ print(new_row_series)
 #print(df)
 #print(len(df.columns))
 #print(df.columns.tolist())
-
-#a=[1,7,2]
-#var=pd.Series(a,index=["x","y","z"])
-#print(var)
-
-#calories = {"day1": 420, "day2": 380, "day3": 390}
-#var = pd.Series(calories)
-#print(var)
-
-#data = {
-#  "calories": [420, 380, 390],
-#  "duration": [50, 40, 45]
-#}
-#var = pd.DataFrame(data)
-#print(var)
