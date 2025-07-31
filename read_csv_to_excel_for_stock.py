@@ -1,5 +1,5 @@
 # Writeten by Chun-Hsiang Chao
-# Date:20250718
+# Date:20250731
 import csv
 import openpyxl
 import os
@@ -34,11 +34,6 @@ rows=sheet.max_row
 records_number=rows-7
 #records_number=12
 
-for x in range(3,records_number+3):
-  for y in range(4,9):
-    if(sheet.cell(row=x,column=y).value[0]=="X"):
-      sheet.cell(x,y).value="0"
-    sheet.cell(row=x,column=y,value=float(sheet.cell(row=x,column=y).value))
 
 for x in range(3,records_number+3):
 	sheet.cell(row=x,column=1,value=(convertDate(sheet.cell(row=x,column=1).value)))
@@ -55,6 +50,11 @@ for x in range(3,records_number+3):
     sheet.cell(row=x,column=y,value=int(new_s))
 
 
+for x in range(3,records_number+3):
+  for y in range(4,8):
+    if(sheet.cell(row=x,column=y).value[0]=="X"):
+      sheet.cell(x,y).value="0"
+    sheet.cell(row=x,column=y,value=float(sheet.cell(row=x,column=y).value))
 
 
 i=get_column_letter(1)
