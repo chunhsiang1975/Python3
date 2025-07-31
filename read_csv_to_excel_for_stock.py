@@ -16,7 +16,7 @@ def convertDate(date):
 	return realdate
 
 
-file_path = 'STOCK_DAY_1101_202506_utf-8.csv'
+file_path = 'STOCK_DAY_1101_202507_utf-8.csv'
 
 
 wb = Workbook()
@@ -97,7 +97,7 @@ for i in range(0,4):
 
 #chart.y_axis.scaling.min = 24  # Set the minimum value for the y-axis
 #chart.y_axis.scaling.max = 29 # Set the maximum value for the y-axis
-date_x=Reference(sheet,min_row=3,max_row=23,min_col=1,max_col=1)
+date_x=Reference(sheet,min_row=3,max_row=records_number+2,min_col=1,max_col=1)
 chart.set_categories(date_x)
 chart.width=records_number
 #chart.height=10
@@ -111,11 +111,11 @@ for i in datas_columns:
 	series.graphicalProperties.line.solidFill = color_name[0]
 	chart.append(series)
 
-date_x=Reference(sheet,min_row=3,max_row=23,min_col=1,max_col=1)
+date_x=Reference(sheet,min_row=3,max_row=records_number+2,min_col=1,max_col=1)
 chart.set_categories(date_x)
 chart.width=records_number
 #chart.height=10
-sheet_chart.add_chart(chart, "N6")
+sheet_chart.add_chart(chart, "P6")
 
 
 chart=BarChart()
@@ -126,7 +126,7 @@ for i in datas_columns:
 	series.graphicalProperties.line.solidFill = color_name[1]
 	chart.append(series)
 
-date_x=Reference(sheet,min_row=3,max_row=23,min_col=1,max_col=1)
+date_x=Reference(sheet,min_row=3,max_row=records_number+2,min_col=1,max_col=1)
 chart.set_categories(date_x)
 chart.width=records_number
 #chart.height=10
@@ -140,11 +140,11 @@ for i in datas_columns:
 	series.graphicalProperties.line.solidFill = color_name[2]
 	chart.append(series)
 
-date_x=Reference(sheet,min_row=3,max_row=23,min_col=1,max_col=1)
+date_x=Reference(sheet,min_row=3,max_row=records_number+2,min_col=1,max_col=1)
 chart.set_categories(date_x)
 chart.width=records_number
 #chart.height=10
-sheet_chart.add_chart(chart, "N22")
+sheet_chart.add_chart(chart, "P22")
 
 wb.save('output_excel_file.xlsx')
 wb.close()
