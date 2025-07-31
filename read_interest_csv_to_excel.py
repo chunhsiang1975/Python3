@@ -1,5 +1,5 @@
 # Writeten by Chun-Hsiang Chao
-# Date:20250716
+# Date:20250731
 import csv
 import openpyxl
 import os
@@ -32,11 +32,6 @@ with open(file_path, 'r', newline='\n', encoding='utf-8') as f:
 
 records_number=len(sheet['A'])-2
 
-int_columns=[6]
-for x in range(3,records_number+2):
-    for y in int_columns:
-      if sheet.cell(row=x,column=y).value == "-" :
-        sheet.cell(row=x,column=y,value="0")
 
 int_columns=[3,6]
 for x in range(3,records_number+2):
@@ -49,12 +44,17 @@ for x in range(3,records_number+2):
     new_s=''.join(new_s_list)
     sheet.cell(row=x,column=y,value=new_s)
 
+int_columns=[6]
+for x in range(3,records_number+2):
+    for y in int_columns:
+      if sheet.cell(row=x,column=y).value == "-" :
+        sheet.cell(row=x,column=y,value="0")
 
 int_columns=[6,7]
 for x in range(3,records_number+2):
   for y in int_columns:
-    sheet.cell(row=x,column=y,value=float(sheet.cell(row=x,column=y).value))
-#    sheet.cell(row=x,column=y,value=str(sheet.cell(row=x,column=y).value))
+#    sheet.cell(row=x,column=y,value=float(sheet.cell(row=x,column=y).value))
+    sheet.cell(row=x,column=y,value=str(sheet.cell(row=x,column=y).value))
 
 
 
@@ -65,7 +65,8 @@ for row in sheet.iter_rows(min_row=3, values_only=True):
 
 
 #sorted_data = sorted(data, key=lambda x: (x[3],x[5],x[6]),reverse=True)
-sorted_data = sorted(data, key=lambda x: (x[3]),reverse=True)
+sorted_data = sorted(data, key=lambda x: (x[3],x[5]),reverse=True)
+#sorted_data = sorted(data, key=lambda x: (x[3]),reverse=True)
 #sorted_data = sorted(data, key=itemgetter(3,5),reverse=True)
 sheet.delete_rows(3, sheet.max_row)
 
