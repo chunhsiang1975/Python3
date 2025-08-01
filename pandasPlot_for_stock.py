@@ -1,17 +1,20 @@
 # Writeten by Chun-Hsiang Chao
-# Date:20250731
+# Date:20250801
 import pandas as pd
 import matplotlib
 import matplotlib.pyplot as plt
 matplotlib.rc('font',family='Noto Serif JP')
 
-import plotly
+import plotly.graph_objs as go
 from plotly.graph_objs import Scatter, Layout
+from plotly.offline import iplot, plot, init_notebook_mode
+
 
 import csv
 import openpyxl
 from openpyxl import Workbook
 from openpyxl.utils import get_column_letter
+import numpy as np
 
 def convertDate(date):
   str1=str(date)
@@ -102,23 +105,52 @@ df=pd.read_excel(temp_file_path)
 #print(df.columns.tolist())
 
 
+init_notebook_mode(connected=True)
 data = [
-    Scatter(x=df['日期'], y=df['收盤價'], name='收盤價'),
-    Scatter(x=df['日期'], y=df['最低價'], name='最低價'),
-    Scatter(x=df['日期'], y=df['最高價'], name='最高價')
+    Scatter(x=df['日期'], y=df['收盤價'], name='收盤價',mode='lines+markers'),
+    Scatter(x=df['日期'], y=df['最低價'], name='最低價',mode='lines+markers'),
+    Scatter(x=df['日期'], y=df['最高價'], name='最高價',mode='lines+markers')
 ]
 
-plotly.offline.iplot({  #以plotly繪圖
-    "data": data,
-    "layout": Layout(title='統計圖')
-},filename='plotly.html') 
+layout = go.Layout(
+    title=title,
+    xaxis=dict(title='日期'),
+    yaxis=dict(title='價格',tickangle=45),
+)
+fig=go.Figure(data=data,layout=layout)
+iplot(fig)
+plot(fig,auto_open=True,filename='scatter_plot.html')
+
+
+
+#x_data = [1, 2, 3, 4, 5]
+x_data = df['日期']
+#y_data = [2, 3, 1, 4, 2]
+y_data = df['收盤價']
+scatter_trace = go.Scatter(
+    x=x_data,
+    y=y_data,
+#    mode='markers', # or 'lines', 'lines+markers'
+    mode='lines+markers', # 'markers' or 'lines', 'lines+markers'
+    name='收盤價'
+)
+layout = go.Layout(
+    title=title,
+    xaxis=dict(title='日期'),
+    yaxis=dict(title='價格')
+)
+fig = go.Figure(data=[scatter_trace], layout=layout)
+iplot(fig)
+plot(fig, auto_open=True, filename='scatter_plot_test.html')
+
 
 #df['日期'] = pd.to_datetime(df['日期'],format='%Y-%m-%d')  #轉換日期欄位為日期格式
 #print(df['日期'])
-
 df.plot(kind='line', figsize=(12, 6), x='日期', y=['收盤價', '最低價', '最高價'])  #繪製統計圖
 plt.xticks(rotation=45)
 plt.savefig("dataframe.png")
 plt.show()
  
-
+#print(np.random.rand(10))
+#print(np.random.rand(10)*10)
+#print(np.random.randint(0,5,10))
