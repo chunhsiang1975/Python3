@@ -1,5 +1,5 @@
 # Writeten by Chun-Hsiang Chao
-# Date:20250801
+# Date:20250805
 import pandas as pd
 import matplotlib
 import matplotlib.pyplot as plt
@@ -106,6 +106,7 @@ df=pd.read_excel(temp_file_path)
 
 
 init_notebook_mode(connected=True)
+#Method 1
 data = [
     Scatter(x=df['日期'], y=df['收盤價'], name='收盤價',mode='lines+markers'),
     Scatter(x=df['日期'], y=df['最低價'], name='最低價',mode='lines+markers'),
@@ -122,28 +123,58 @@ iplot(fig)
 plot(fig,auto_open=True,filename='scatter_plot.html')
 
 
-
+#Method 2
 #x_data = [1, 2, 3, 4, 5]
 x_data = df['日期']
 #y_data = [2, 3, 1, 4, 2]
-y_data = df['收盤價']
-scatter_trace = go.Scatter(
+y_data = df['成交金額']
+bar_trace = go.Bar(
     x=x_data,
     y=y_data,
-#    mode='markers', # or 'lines', 'lines+markers'
-    mode='lines+markers', # 'markers' or 'lines', 'lines+markers'
-    name='收盤價'
+    name='成交金額'
 )
 layout = go.Layout(
     title=title,
     xaxis=dict(title='日期'),
-    yaxis=dict(title='價格')
+    yaxis=dict(title='成交金額')
 )
-fig = go.Figure(data=[scatter_trace], layout=layout)
+fig = go.Figure(data=[bar_trace], layout=layout)
 iplot(fig)
-plot(fig, auto_open=True, filename='scatter_plot_test.html')
+plot(fig, auto_open=True, filename='bar_plot_1.html')
 
+x_data = df['日期']
+y_data = df['成交股數']
+bar_trace = go.Bar(
+    x=x_data,
+    y=y_data,
+    name='成交股數'
+)
+layout = go.Layout(
+    title=title,
+    xaxis=dict(title='日期'),
+    yaxis=dict(title='成交股數')
+)
+fig = go.Figure(data=[bar_trace], layout=layout)
+iplot(fig)
+plot(fig, auto_open=True, filename='bar_plot_2.html')
 
+x_data = df['日期']
+y_data = df['成交筆數']
+bar_trace = go.Bar(
+    x=x_data,
+    y=y_data,
+    name='成交筆數'
+)
+layout = go.Layout(
+    title=title,
+    xaxis=dict(title='日期'),
+    yaxis=dict(title='成交筆數')
+)
+fig = go.Figure(data=[bar_trace], layout=layout)
+iplot(fig)
+plot(fig, auto_open=True, filename='bar_plot_3.html')
+
+#Method 3
 #df['日期'] = pd.to_datetime(df['日期'],format='%Y-%m-%d')  #轉換日期欄位為日期格式
 #print(df['日期'])
 df.plot(kind='line', figsize=(12, 6), x='日期', y=['收盤價', '最低價', '最高價'])  #繪製統計圖
