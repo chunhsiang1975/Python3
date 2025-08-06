@@ -1,6 +1,6 @@
 # Writeten by Chun-Hsiang Chao
 # Date:20250619
-import re
+import re #see Regular expression cheatsheet in https://pythex.org/
 from bs4 import BeautifulSoup
 
 m=re.search(r'[0-9]+','temp123abcd') #搜尋數字，r表示這是正規表示式,不寫也可以
