@@ -1,5 +1,5 @@
 # Writeten by Chun-Hsiang Chao
-# Date:20250619
+# Date:20251121
 import datetime
 import openpyxl
 from openpyxl.styles import Font, Color, Alignment, Border, Side, PatternFill, NamedStyle, GradientFill
@@ -8,10 +8,22 @@ from openpyxl.formatting.rule import CellIsRule, ColorScaleRule
 #from xlcalculator import Evaluator
 #pip install xlcalculator --break-system-packages
 
-table_name=["202507","202507預算","202508","202508預算","202509","202509預算"]
+table_name=[
+"202601","202601預算",
+"202602","202602預算",
+"202603","202603預算",
+"202604","202604預算",
+"202605","202605預算",
+"202606","202606預算",
+"202607","202607預算",
+"202608","202608預算",
+"202609","202609預算",
+"202610","202610預算",
+"202611","202611預算",
+"202612","202612預算"]
 #print(len(table_name))
 
-workbook=openpyxl.load_workbook('my_financial_3.xlsx',data_only=False)
+workbook=openpyxl.load_workbook('my_financial_2025.xlsx',data_only=False)
 
 sheet=workbook.worksheets[0]
 sheet.page_setup_orientation=sheet.ORIENTATION_LANDSCAPE
@@ -66,6 +78,28 @@ for k in range(0,len(table_name)-1,2):
 
 
 
+delete_table_name=[
+"202501","202501預算",
+"202502","202502預算",
+"202503","202503預算",
+"202504","202504預算",
+"202505","202505預算",
+"202506","202506預算",
+"202507","202507預算",
+"202508","202508預算",
+"202509","202509預算",
+"202510","202510預算",
+"202511","202511預算",
+"202512","202512預算"]
+#print(len(delete_table_name))
 
-workbook.save('test_my_financial_3.xlsx')
+
+for k in range(0,len(delete_table_name),1):
+    delete_sheet=workbook[delete_table_name[k]]
+    workbook.remove(delete_sheet)
+
+
+
+
+workbook.save('test_my_financial_2026.xlsx')
 workbook.close()
